@@ -11,7 +11,12 @@ test("AWS export contains the complete SEO page", () => {
   assert.match(html, /453aUdNFOWRqDIFmEEvziB/);
   assert.match(html, /2wQkI8Rrk6S2kZwq4ZWa9N/);
   assert.match(html, /1lrNpN3xcpbmQQXbzo2J8e/);
-  assert.doesNotMatch(html, /3bac33c0bf754facaeb738f2035b8ebb|d278558d6574780b740e3d4eb7e9078/);
+  assert.match(html, /6trOBkH8l8LWGQgo9DmZSH/);
+  assert.match(html, /Privacy &amp; cookies/);
+  assert.match(html, /Spotify Widget Terms/);
+  assert.match(html, /data-spotify-consent="allowed"/);
+  assert.doesNotMatch(html, /<iframe[^>]+open\.spotify\.com\/embed/i);
+  assert.doesNotMatch(html, /client[_ -]?secret|spotify[_ -]?client[_ -]?id/i);
 });
 
 test("AWS export includes production assets and compiled CSS", async () => {

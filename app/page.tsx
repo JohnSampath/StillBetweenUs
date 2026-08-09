@@ -1,5 +1,12 @@
 import type { CSSProperties } from "react";
 import { ShareBar } from "./share-bar";
+import { SpotifyEmbed, SpotifyPrivacyNotice } from "./spotify-embeds";
+
+const artist = {
+  name: "kkml",
+  id: "6trOBkH8l8LWGQgo9DmZSH",
+  url: "https://open.spotify.com/artist/6trOBkH8l8LWGQgo9DmZSH",
+};
 
 const tracks = [
   {
@@ -34,7 +41,7 @@ const structuredData = {
   description:
     "A three-song listening story by kkml featuring Still Between Us, Sheclipse, and Loving You Endlessly.",
   numTracks: 3,
-  creator: { "@type": "MusicGroup", name: "kkml" },
+  creator: { "@type": "MusicGroup", name: artist.name, url: artist.url },
   track: tracks.map((track, index) => ({
     "@type": "MusicRecording",
     position: index + 1,
@@ -58,6 +65,7 @@ export default function Home() {
         </a>
         <div className="nav-links">
           <a href="#listen">The songs</a>
+          <a href="#artist">The artist</a>
           <a href="#story">The story</a>
           <a className="nav-cta" href="#share">Share</a>
         </div>
@@ -127,6 +135,8 @@ export default function Home() {
             </p>
           </div>
 
+          <SpotifyPrivacyNotice />
+
           <div className="track-list">
             {tracks.map((track, index) => (
               <article
@@ -142,13 +152,10 @@ export default function Home() {
                   </div>
                 </header>
                 <p className="track-note">{track.note}</p>
-                <iframe
-                  className="spotify-player"
-                  src={`https://open.spotify.com/embed/track/${track.id}?utm_source=stillbetweenus`}
-                  width="100%"
-                  height="152"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
+                <SpotifyEmbed
+                  kind="track"
+                  id={track.id}
+                  height={152}
                   title={`Play ${track.title} by kkml on Spotify`}
                 />
                 <a href={track.url} target="_blank" rel="noopener noreferrer">
@@ -157,6 +164,28 @@ export default function Home() {
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="artist-section shell" id="artist" aria-labelledby="artist-title">
+        <div className="artist-copy">
+          <p className="eyebrow"><span /> More from the artist</p>
+          <h2 id="artist-title">Meet kkml.</h2>
+          <p>
+            Explore the official kkml artist profile for more music, releases, and the
+            option to follow the artist directly on Spotify.
+          </p>
+          <a className="button button-primary" href={artist.url} target="_blank" rel="noopener noreferrer">
+            View kkml on Spotify <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <div className="artist-player">
+          <SpotifyEmbed
+            kind="artist"
+            id={artist.id}
+            height={352}
+            title="View more music by kkml on Spotify"
+          />
         </div>
       </section>
 
@@ -246,13 +275,16 @@ export default function Home() {
           </div>
           <div className="footer-links">
             <a href="#listen">Listen</a>
+            <a href="#artist">Artist</a>
             <a href="#story">Story</a>
             <a href="#share">Share</a>
-            <a href={tracks[0].url} target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+            <a href="#privacy">Privacy</a>
+            <a href={artist.url} target="_blank" rel="noopener noreferrer">Spotify ↗</a>
           </div>
           <p className="fine-print">
             © {new Date().getFullYear()} Still Between Us. Spotify is a trademark of
-            Spotify AB. This independent page links to official Spotify content.
+            Spotify AB. This independent page links to official Spotify content. Spotify
+            embeds remain off until you choose to load them.
           </p>
         </div>
       </footer>
