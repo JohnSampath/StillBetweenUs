@@ -14,9 +14,9 @@ Parameters:
   WebAclArn:
     Type: String
     Default: arn:aws:wafv2:us-east-1:765332581359:global/webacl/CreatedByCloudFront-dd835204/f84a0365-9c18-46cf-88a9-020e5ec12e59
-  GitHubRepository:
+  GitHubOidcSubject:
     Type: String
-    Default: JohnSampath/StillBetweenUs
+    Default: repo:JohnSampath@42769671/StillBetweenUs@1328620883:ref:refs/heads/initial_branch
 
 Resources:
   SiteBucket:
@@ -167,7 +167,7 @@ Resources:
             Condition:
               StringEquals:
                 token.actions.githubusercontent.com:aud: sts.amazonaws.com
-                token.actions.githubusercontent.com:sub: !Sub repo:${GitHubRepository}:ref:refs/heads/initial_branch
+                token.actions.githubusercontent.com:sub: !Ref GitHubOidcSubject
       Policies:
         - PolicyName: StillBetweenUsSeoDeploy
           PolicyDocument:
