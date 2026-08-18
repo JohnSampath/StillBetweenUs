@@ -9,9 +9,11 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "build:aws": "node scripts/build-aws-site.mjs",
+    "build:aws:interim": "node scripts/build-aws-interim.mjs",
     "start": "vinext start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "test:aws": "npm run build:aws && node --test tests/aws-static-site.test.mjs",
+    "test:aws:interim": "npm run build:aws:interim && node --test tests/aws-interim.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate"
   },

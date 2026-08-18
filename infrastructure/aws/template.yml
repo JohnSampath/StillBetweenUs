@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Still Between Us public SEO site on S3 and CloudFront
+Description: Still Between Us permission-pending site on S3 and CloudFront
 
 Parameters:
   DomainName:
@@ -17,6 +17,10 @@ Parameters:
   GitHubOidcSubject:
     Type: String
     Default: repo:JohnSampath@42769671/StillBetweenUs@1328620883:ref:refs/heads/initial_branch
+  AllowedCountries:
+    Type: CommaDelimitedList
+    Default: IN,AE
+    Description: Countries allowed while artist and artwork authorization is pending
 
 Resources:
   SiteBucket:
@@ -61,7 +65,7 @@ Resources:
       DistributionConfig:
         Aliases:
           - !Ref DomainName
-        Comment: Still Between Us global SEO page
+        Comment: Still Between Us permission-pending page limited to India and UAE
         CustomErrorResponses:
           - ErrorCachingMinTTL: 60
             ErrorCode: 403
@@ -91,7 +95,8 @@ Resources:
         PriceClass: PriceClass_All
         Restrictions:
           GeoRestriction:
-            RestrictionType: none
+            RestrictionType: whitelist
+            Locations: !Ref AllowedCountries
         ViewerCertificate:
           AcmCertificateArn: !Ref CertificateArn
           MinimumProtocolVersion: TLSv1.2_2021

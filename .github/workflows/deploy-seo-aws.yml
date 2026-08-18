@@ -36,8 +36,10 @@ jobs:
       - name: Install dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
 
-      - name: Build and test the AWS SEO export
-        run: npm run test:aws
+      - name: Build and test the permission-pending site
+        # Switch back to `npm run test:aws` only after the signed authorization
+        # has been verified and the approval change is reviewed.
+        run: npm run test:aws:interim
 
       - name: Authenticate to AWS with GitHub OIDC
         uses: aws-actions/configure-aws-credentials@v6
